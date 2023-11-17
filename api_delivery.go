@@ -41,6 +41,7 @@ type DeliveryType string
 const (
 	DeliveryTypeDocument DeliveryType = "DOCUMENT"
 	DeliveryTypeFood     DeliveryType = "FOOD"
+	ParcelTypeMealPlan   DeliveryType = "MEAL_PLAN"
 )
 
 // VehicleType :
@@ -113,7 +114,12 @@ func (c Client) CreateDelivery(request RequestCreateDelivery) (*ResponseCreateDe
 
 	response := new(ResponseCreateDelivery)
 	if err := c.httpAPI(method, requestURL, request, response); err != nil {
+		fmt.Println("DAH KENA", err)
 		return nil, err
+	}
+
+	if response.Err != nil {
+		fmt.Printf("%+v", response.Err)
 	}
 
 	return response, nil
